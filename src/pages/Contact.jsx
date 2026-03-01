@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react'
+import emailjs from '@emailjs/browser'
 import ParticleCanvas from '../components/ParticleCanvas'
 import './Contact.css'
 
-// ── Web3Forms ──────────────────────────────────────────────────────────────────
-const W3F_KEY  = 'd7872b01-645d-48f5-a766-ae856a69913d'
-const W3F_URL  = 'https://api.web3forms.com/submit'
+// ── Web3Forms (admin notification) ────────────────────────────────────────────
+// Public-facing key — intentionally hardcoded (client-side, no secret here).
+const W3F_KEY = 'd7872b01-645d-48f5-a766-ae856a69913d'
+const W3F_URL = 'https://api.web3forms.com/submit'
+
+// ── EmailJS (user auto-reply only) ────────────────────────────────────────────
+// Uses ONLY the PUBLIC KEY — never the private key. Safe for frontend use.
+const EJS_SERVICE  = import.meta.env.VITE_EMAILJS_SERVICE_ID       // service_f3pbks9
+const EJS_TEMPLATE = import.meta.env.VITE_EMAILJS_TEMPLATE_AUTOREPLY // template_xwvza7j
+const EJS_PUBKEY   = import.meta.env.VITE_EMAILJS_PUBLIC_KEY        // LV04WC6YVJ8xspdxO
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 // ── Services dropdown options ──────────────────────────────────────────────────
@@ -21,23 +30,22 @@ const SERVICES = [
 ]
 
 // ── Phone helpers ──────────────────────────────────────────────────────────────
-// Strip everything except digits so we can count them accurately
 const stripPhone = raw => raw.replace(/[^\d]/g, '')
 
 // ── Validation ─────────────────────────────────────────────────────────────────
 function validate(f) {
     const e = {}
-    if (!f.name.trim())                              e.name    = 'Name is required.'
-    if (!f.email.trim())                             e.email   = 'Email is required.'
-    else if (!EMAIL_RE.test(f.email))                e.email   = 'Enter a valid email address.'
-    if (!f.phone.trim())                             e.phone   = 'Phone number is required.'
+    if (!f.name.trim())                               e.name    = 'Name is required.'
+    if (!f.email.trim())                              e.email   = 'Email is required.'
+    else if (!EMAIL_RE.test(f.email))                 e.email   = 'Enter a valid email address.'
+    if (!f.phone.trim())                              e.phone   = 'Phone number is required.'
     else {
         const digits = stripPhone(f.phone)
-        if (digits.length < 7 || digits.length > 15) e.phone  = 'Enter a valid phone number (7–15 digits).'
+        if (digits.length < 7 || digits.length > 15) e.phone   = 'Enter a valid phone number (7–15 digits).'
     }
-    if (!f.service)                                  e.service = 'Please select a service.'
-    if (!f.message.trim())                           e.message = 'Message is required.'
-    else if (f.message.trim().length < 10)           e.message = 'Message must be at least 10 characters.'
+    if (!f.service)                                   e.service = 'Please select a service.'
+    if (!f.message.trim())                            e.message = 'Message is required.'
+    else if (f.message.trim().length < 10)            e.message = 'Message must be at least 10 characters.'
     return e
 }
 
@@ -68,7 +76,8 @@ export default function Contact() {
     const [form,      setForm]      = useState(BLANK)
     const [errors,    setErrors]    = useState({})
     const [isSending, setIsSending] = useState(false)
-    const [status,    setStatus]    = useState(null)   // null | 'success' | 'error'
+    // null | 'success' | 'success_no_reply' | 'error'
+    const [status,    setStatus]    = useState(null)
 
     const handle = e => {
         const { name, value } = e.target
@@ -90,55 +99,67 @@ export default function Contact() {
         setIsSending(true)
         setStatus(null)
 
-        // Sanitise phone — strip to digits only for submission
-        const cleanPhone = stripPhone(form.phone)
-
-        // Auto-reply body (sent to user via Web3Forms autoresponder)
-        const autoReplyBody =
-            `Hi ${form.name},\n\n` +
-            `Thanks for reaching out to Gro Innovative. We received your message about ${form.service}.\n\n` +
-            `Our team will review your enquiry and reply within 24 hours.\n\n` +
-            `— Gro Innovative\n` +
-            `https://groinnovativerevamped.vercel.app/`
+        const cleanPhone      = stripPhone(form.phone)
+        const resolvedSubject = form.subject.trim() || `New Inquiry: ${form.service} — Gro Innovative`
 
         try {
+            // ── Step 1: Web3Forms → admin notification ─────────────────────
+            // NOTE: No autoresponder fields here — user reply handled by EmailJS.
             const res = await fetch(W3F_URL, {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    // ── Core Web3Forms fields ──────────────────────────────
-                    access_key:   W3F_KEY,
-                    from_name:    'Gro Innovative Website',
-                    replyto:      form.email,
-                    botcheck:     form.botcheck,
-
-                    // ── Submission data (appears in admin notification) ───
-                    name:         form.name,
-                    email:        form.email,
-                    phone:        cleanPhone,
-                    service:      form.service,
-                    subject:      form.subject.trim() || `New Inquiry: ${form.service} — Gro Innovative`,
-                    message:      form.message,
-
-                    // ── Web3Forms autoresponder ────────────────────────────
-                    // NOTE: Enable "Auto Reply" in your Web3Forms dashboard
-                    // Dashboard → your form → Settings → Auto Response Email
-                    // These fields populate the auto-reply sent to the user.
-                    autoresponder_subject: 'We received your message — Gro Innovative',
-                    autoresponder_message: autoReplyBody,
+                    access_key: W3F_KEY,
+                    from_name:  'Gro Innovative Website',
+                    replyto:    form.email,
+                    botcheck:   form.botcheck,
+                    name:       form.name,
+                    email:      form.email,
+                    phone:      cleanPhone,
+                    service:    form.service,
+                    subject:    resolvedSubject,
+                    message:    form.message,
+                    // ── NO autoresponder_subject / autoresponder_message ──
                 }),
             })
 
             const data = await res.json()
+            if (!data.success) throw new Error(data.message || 'Web3Forms submission failed')
 
-            if (data.success) {
-                setForm(BLANK)
-                setErrors({})
-                setStatus('success')
-                setTimeout(() => setStatus(null), 7000)
-            } else {
-                throw new Error(data.message || 'Submission failed')
+            // ── Step 2: EmailJS → auto-reply to user ───────────────────────
+            // Non-blocking: failure shows a soft note but does NOT cancel success.
+            let autoReplyOk = false
+            try {
+                await emailjs.send(
+                    EJS_SERVICE,
+                    EJS_TEMPLATE,
+                    {
+                        // Maps to {{to_email}} in template — EmailJS sends TO this address
+                        to_email:  form.email,
+                        // Template variables (match exactly what's in autoreply.html)
+                        name:      form.name,
+                        service:   form.service,
+                        subject:   resolvedSubject,
+                        message:   form.message,
+                        phone:     cleanPhone,
+                        page_url:  window.location.href,
+                        year:      String(new Date().getFullYear()),
+                        from_name: 'Gro Innovative',
+                    },
+                    { publicKey: EJS_PUBKEY },
+                )
+                autoReplyOk = true
+            } catch (ejsErr) {
+                // Log but don't surface to user as hard error
+                console.warn('[EmailJS auto-reply]', ejsErr)
             }
+
+            // Reset form
+            setForm(BLANK)
+            setErrors({})
+            setStatus(autoReplyOk ? 'success' : 'success_no_reply')
+            setTimeout(() => setStatus(null), 8000)
+
         } catch (err) {
             console.error('[Web3Forms]', err)
             setStatus('error')
@@ -231,7 +252,7 @@ export default function Contact() {
                         {/* ── Form column ──────────────────────────────────── */}
                         <div className="contact-form-wrap reveal reveal-delay-1">
 
-                            {/* Success banner */}
+                            {/* Success — auto-reply sent */}
                             {status === 'success' && (
                                 <div className="submit-status submit-status--success" role="alert">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
@@ -242,7 +263,18 @@ export default function Contact() {
                                 </div>
                             )}
 
-                            {/* Error banner */}
+                            {/* Success — auto-reply failed (soft note) */}
+                            {status === 'success_no_reply' && (
+                                <div className="submit-status submit-status--success" role="alert">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <p>Submitted successfully. If you don't receive a confirmation email, please contact us directly at <strong>groinnovative@gmail.com</strong>.</p>
+                                </div>
+                            )}
+
+                            {/* Error */}
                             {status === 'error' && (
                                 <div className="submit-status submit-status--error" role="alert">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0, marginTop: 1 }}>

@@ -5,7 +5,12 @@
       "Bash(npm i @emailjs/browser)",
       "Bash(npx vite --version)",
       "Bash(curl -s -X POST https://api.emailjs.com/api/v1.0/email/send -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" -d '{:*)",
-      "Bash(curl -s -X POST https://api.web3forms.com/submit -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d '{:*)"
+      "Bash(curl -s -X POST https://api.web3forms.com/submit -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d '{:*)",
+      "Bash(npm install @emailjs/browser)",
+      "Bash(npm run build)",
+      "Bash(curl -s -X POST https://api.emailjs.com/api/v1.0/email/send -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" -H \"Referer: http://localhost:5173/contact\" -d '{:*)",
+      "Bash(curl -s -X POST \"https://api.emailjs.com/api/v1.0/email/send\" -H \"Content-Type: application/json\" -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" -H \"Origin: https://groinnovativerevamped.vercel.app\" -H \"Referer: https://groinnovativerevamped.vercel.app/contact\" -d '{:*)",
+      "Bash(curl -s -X POST \"https://api.emailjs.com/api/v1.0/email/send\" -H \"Content-Type: application/json\" -H \"Origin: https://groinnovativerevamped.vercel.app\" -d '{:*)"
     ]
   }
 }
