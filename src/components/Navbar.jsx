@@ -27,6 +27,16 @@ export default function Navbar() {
 
     useEffect(() => { setOpen(false) }, [location.pathname])
 
+    // Lock body scroll when mobile menu is open
+    useEffect(() => {
+        if (open) {
+            document.body.classList.add('menu-open')
+        } else {
+            document.body.classList.remove('menu-open')
+        }
+        return () => document.body.classList.remove('menu-open')
+    }, [open])
+
     // Build class string
     const navClass = [
         'gi-nav',

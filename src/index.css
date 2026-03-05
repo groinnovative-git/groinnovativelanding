@@ -81,6 +81,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Lock body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+main {
+  overflow-x: hidden;
+}
+
 /* ── Animated Mesh Background ── */
 .bg-mesh-container {
   position: absolute;
@@ -212,6 +221,7 @@ p {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   cursor: pointer;
+  min-height: 48px;
 }
 
 .btn-primary {
@@ -356,6 +366,12 @@ p {
   background: var(--surface);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+}
+
 .glass-card {
   background: var(--card);
   backdrop-filter: blur(12px);
@@ -482,6 +498,17 @@ p {
 
   .container {
     padding: 0 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .btn-lg {
+    padding: 14px 24px;
+    font-size: 0.95rem;
   }
 }
 

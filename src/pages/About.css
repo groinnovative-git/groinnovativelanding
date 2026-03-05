@@ -619,6 +619,24 @@
     .checklist-item {
         padding: 14px 16px;
     }
+
+    .team-card {
+        padding: 28px 20px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-card {
+        padding: 24px 16px 20px;
+    }
+
+    .team-count {
+        font-size: 2.5rem;
+    }
+
+    .step-num {
+        font-size: 2.2rem;
+    }
 }
 
 /* ── Reduced motion ── */

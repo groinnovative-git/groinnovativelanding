@@ -59,9 +59,9 @@
 }
 
 .social-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
@@ -141,5 +141,16 @@
         flex-direction: column;
         gap: 12px;
         text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .gi-footer {
+        padding: 48px 0 0;
+    }
+
+    .footer-grid {
+        gap: 32px;
+        padding-bottom: 40px;
     }
 }

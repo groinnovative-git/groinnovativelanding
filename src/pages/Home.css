@@ -77,7 +77,7 @@
 .hero-headline {
     margin-bottom: 20px;
     letter-spacing: -0.02em;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-size: clamp(1.75rem, 4.5vw, 3.2rem);
     line-height: 1.15;
 }
 
@@ -585,6 +585,30 @@
 
     .hero-grid-wrapper.CenteredLayout {
         min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-card {
+        padding: 28px 16px;
+    }
+
+    .stat-num {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .cta-banner-inner {
+        padding: 28px 16px;
+    }
+
+    .why-card {
+        padding: 20px;
+    }
+
+    .why-card-stack {
+        gap: 20px;
     }
 }
 

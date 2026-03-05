@@ -3,7 +3,11 @@ import './Footer.css'
 import logoImg from '../assets/logo.png'
 
 const services = ['Web Development', 'Mobile Apps', 'Cloud Solutions', 'Digital Marketing', 'Logo Design', 'IT Consulting']
-const company = ['About Us', 'Services', 'Contact']
+const company = [
+    { label: 'About Us', to: '/about' },
+    { label: 'Services', to: '/services' },
+    { label: 'Contact', to: '/contact' },
+]
 const social = [
     { icon: '𝕏', label: 'Twitter', href: '#' },
     { icon: 'in', label: 'LinkedIn', href: '#' },
@@ -42,7 +46,7 @@ export default function Footer() {
                         <h4>Company</h4>
                         <ul>
                             {company.map(c => (
-                                <li key={c}><Link to={`/${c.toLowerCase().replace(/ /g, '-').replace("'", '')}`}>{c}</Link></li>
+                                <li key={c.label}><Link to={c.to}>{c.label}</Link></li>
                             ))}
                         </ul>
                     </div>

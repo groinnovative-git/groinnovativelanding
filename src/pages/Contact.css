@@ -176,13 +176,13 @@
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 48px;
-        text-align: center;
     }
 
     .contact-info {
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
 
     .info-items {
@@ -414,6 +414,7 @@
 .cf-submit-btn {
     width: 100%;
     justify-content: center;
+    min-height: 52px;
 }
 
 /* ── Phone input with country-code prefix ─────────────────────────────────── */
@@ -466,4 +467,30 @@
 .phone-input-wrap:has(input.input-error) {
     border-color: rgba(239, 68, 68, 0.55);
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+}
+
+@media (max-width: 380px) {
+    .contact-form-wrap {
+        padding: 20px 12px;
+    }
+
+    .contact-grid {
+        gap: 20px;
+    }
+
+    .form-row {
+        gap: 12px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+
+    .phone-prefix {
+        padding: 10px 10px 10px 14px;
+        font-size: 0.88rem;
+    }
 }
