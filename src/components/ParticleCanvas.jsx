@@ -20,7 +20,7 @@ export default function ParticleCanvas() {
         let height = canvas.height = window.innerHeight;
         let animId;
 
-        const STAR_COUNT = 600; // Reduced from 3000 — visually identical
+        const STAR_COUNT = 3000; // Original high density
         const FOCAL_LENGTH = 3000;
 
         let stars = [];

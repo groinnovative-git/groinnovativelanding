@@ -105,8 +105,11 @@ export default function Services() {
                         <div className="hero-content centered" style={{ maxWidth: 880 }}>
 
                             {/* Pill badge */}
-                            <div
-                                className="badge badge-accent hero-anim-in"
+                            <motion.div
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                className="badge badge-accent"
                                 style={{
                                     padding: '5px 14px',
                                     letterSpacing: '0.08em',
@@ -116,11 +119,15 @@ export default function Services() {
                             >
                                 <span className="badge-dot" style={{ background: 'var(--accent)' }} />
                                 WHAT WE OFFER
-                            </div>
+                            </motion.div>
 
                             {/* Headline */}
-                            <h1
-                                className="hero-headline services-hero-headline hero-anim-in hero-delay-1"
+                            <motion.h1
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.1 }}
+                                className="hero-headline services-hero-headline"
                                 style={{
                                     fontSize: 'clamp(1.85rem, 5vw, 3.6rem)',
                                     fontWeight: 700,
@@ -133,11 +140,14 @@ export default function Services() {
                             >
                                 High Performance Websites,{' '}
                                 <span className="gradient-text">Software & Growth Systems</span>
-                            </h1>
+                            </motion.h1>
 
                             {/* Paragraph */}
-                            <p
-                                className="hero-anim-in hero-delay-2"
+                            <motion.p
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.2 }}
                                 style={{
                                     maxWidth: 620,
                                     margin: '0 auto',
@@ -147,11 +157,15 @@ export default function Services() {
                                 }}
                             >
                                 From strategy to launch  we build conversion focused websites, scalable applications, SEO foundations, and marketing systems designed to generate leads and long-term growth.
-                            </p>
+                            </motion.p>
 
                             {/* Trust pills */}
-                            <div
-                                className="flex flex-wrap justify-center gap-3 hero-anim-in hero-delay-3"
+                            <motion.div
+                                variants={fadeInUp}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{ delay: 0.35 }}
+                                className="flex flex-wrap justify-center gap-3"
                                 style={{ marginTop: 40 }}
                             >
                                 {[
@@ -171,7 +185,7 @@ export default function Services() {
                                         </span>
                                     )
                                 })}
-                            </div>
+                            </motion.div>
 
                         </div>
                     </div>

@@ -195,14 +195,14 @@ export default function Contact() {
                 <div className="container" style={{ paddingTop: 'calc(var(--nav-h) + 64px)', paddingBottom: '64px' }}>
                     <div className="hero-grid-wrapper CenteredLayout" style={{ minHeight: 'auto' }}>
                         <div className="hero-content centered" style={{ maxWidth: 840 }}>
-                            <div className="badge hero-anim-in" style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}>
+                            <div className="badge reveal" style={{ boxShadow: '0 0 20px rgba(16,185,129,0.15)' }}>
                                 <span className="badge-dot" />GET IN TOUCH
                             </div>
-                            <h1 className="hero-headline hero-anim-in hero-delay-1">
+                            <h1 className="hero-headline reveal reveal-delay-1">
                                 Let's Build Something{' '}
                                 <span className="gradient-text">Great Together</span>
                             </h1>
-                            <p className="hero-sub hero-anim-in hero-delay-2" style={{ maxWidth: 580 }}>
+                            <p className="hero-sub reveal reveal-delay-2" style={{ maxWidth: 580 }}>
                                 Tell us about your project. We'll get back to you with a plan not a sales pitch within 24 hours.
                             </p>
                         </div>

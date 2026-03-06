@@ -138,11 +138,11 @@ export default function Home() {
                 <div className="container">
                     <div className="hero-grid-wrapper CenteredLayout">
                         <div className="hero-content centered">
-                            <div className="badge hero-anim-in">
+                            <div className="badge reveal">
                                 <span className="badge-dot" />
                                 ACCELERATE YOUR BUSINESSES
                             </div>
-                            <h1 className="hero-headline hero-anim-in hero-delay-1">
+                            <h1 className="hero-headline reveal reveal-delay-1">
                                 AI Driven Software &<br />
                                 <span className="hero-nowrap-line">
                                     <EyeFollowIcon />
@@ -150,10 +150,10 @@ export default function Home() {
                                 </span><br />
                                 for Modern Businesses
                             </h1>
-                            <p className="hero-sub hero-anim-in hero-delay-2">
+                            <p className="hero-sub reveal reveal-delay-2">
                                 We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products engineered for performance, visibility, and long-term growth.
                             </p>
-                            <div className="hero-actions hero-anim-in hero-delay-3">
+                            <div className="hero-actions reveal reveal-delay-3">
                                 <Link to="/contact" className="btn btn-primary">
                                     ✔ Start a Project
                                 </Link>
@@ -162,7 +162,7 @@ export default function Home() {
                                 </Link>
                             </div>
                             {/* Floating trust pills */}
-                            <div className="trust-pills hero-anim-in hero-delay-4">
+                            <div className="trust-pills reveal reveal-delay-4">
                                 <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="3" style={{ verticalAlign: 'middle', marginRight: 8 }}><polyline points="20 6 9 17 4 12" /></svg> Free Consultation</span>
                                 <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="3" style={{ verticalAlign: 'middle', marginRight: 8 }}><polyline points="20 6 9 17 4 12" /></svg> No Lock-in Contracts</span>
                                 <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="3" style={{ verticalAlign: 'middle', marginRight: 8 }}><polyline points="20 6 9 17 4 12" /></svg> NDA Protected</span>
