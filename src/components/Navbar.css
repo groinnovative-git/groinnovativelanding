@@ -279,6 +279,37 @@
     justify-content: center;
 }
 
+.mobile-contact-info {
+    width: 100%;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mobile-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+
+a.mobile-contact-item:hover {
+    color: var(--primary);
+}
+
+.mobile-contact-item svg {
+    color: var(--primary);
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
 /* ============================================
    RESPONSIVE BREAKPOINTS
    ============================================ */

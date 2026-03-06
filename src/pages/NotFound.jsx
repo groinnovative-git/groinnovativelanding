@@ -34,18 +34,18 @@ export default function NotFound() {
                 <div className="container">
                     <div className="hero-grid-wrapper CenteredLayout" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
                         <div className="hero-content centered">
-                            <div className="badge reveal">
+                            <div className="badge hero-anim-in">
                                 <span className="badge-dot" />
                                 404 ERROR
                             </div>
-                            <h1 className="hero-headline reveal reveal-delay-1">
+                            <h1 className="hero-headline hero-anim-in hero-delay-1">
                                 <span className="gradient-text">Page Not Found</span>
                             </h1>
-                            <p className="hero-sub reveal reveal-delay-2" style={{ maxWidth: '500px', margin: '0 auto' }}>
+                            <p className="hero-sub hero-anim-in hero-delay-2" style={{ maxWidth: '500px', margin: '0 auto' }}>
                                 Sorry, the page you’re looking for doesn’t exist or has been moved. Let’s get you back to the right place.
                             </p>
 
-                            <div className="hero-actions reveal reveal-delay-3" style={{ justifyContent: 'center' }}>
+                            <div className="hero-actions hero-anim-in hero-delay-3" style={{ justifyContent: 'center' }}>
                                 <Link to="/" className="btn btn-primary">
                                     Return to Home
                                 </Link>
@@ -54,7 +54,7 @@ export default function NotFound() {
                                 </Link>
                             </div>
 
-                            <div className="popular-links reveal reveal-delay-4">
+                            <div className="popular-links hero-anim-in hero-delay-4">
                                 <p className="popular-links-title">Popular Links</p>
                                 <ul className="popular-links-list">
                                     <li><Link to="/">Home</Link></li>

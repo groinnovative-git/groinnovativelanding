@@ -22,7 +22,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="footer-brand">
                         <Link to="/" className="gi-logo" onClick={() => window.scrollTo(0, 0)} style={{ marginBottom: 16, display: 'inline-block' }}>
-                            <img src={logoImg} alt="GroInnovative" className="gi-logo-img" style={{ height: '64px', width: 'auto', display: 'block' }} />
+                            <img src={logoImg} alt="GroInnovative" className="gi-logo-img" width="274" height="64" loading="lazy" style={{ height: '64px', width: 'auto', display: 'block' }} />
                         </Link>
                         <p className="footer-tagline">
                             We build software that scales.<br />
