@@ -1,6 +1,13 @@
 
 import { useRef, useMemo, useEffect, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+
+function useIsMobile() {
+    const [mobile] = useState(() =>
+        typeof window !== 'undefined' &&
+        (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches)
+    );
+    return mobile;
+}
 
 function usePrefersReducedMotion() {
     const [reduced, setReduced] = useState(false)
@@ -13,6 +20,13 @@ function usePrefersReducedMotion() {
     }, [])
     return reduced
 }
+
+// Lazy-load Three.js Canvas only when needed (desktop)
+let Canvas, useFrame;
+const loadThree = () => import('@react-three/fiber').then(mod => {
+    Canvas = mod.Canvas;
+    useFrame = mod.useFrame;
+});
 
 function CoreOrb({ paused }) {
     const ref = useRef()
@@ -110,8 +124,41 @@ function Scene({ paused }) {
     )
 }
 
+/* CSS-only mobile fallback orb */
+const mobileOrbStyle = {
+    width: '200px',
+    height: '200px',
+    borderRadius: '50%',
+    background: 'radial-gradient(circle at 40% 35%, #34D399, #10B981 50%, #059669 80%, transparent)',
+    boxShadow: '0 0 60px rgba(16, 185, 129, 0.4), 0 0 120px rgba(16, 185, 129, 0.2)',
+    margin: '0 auto',
+    opacity: 0.85,
+};
+
 export default function ServicesHero3D() {
-    const reduced = usePrefersReducedMotion()
+    const isMobile = useIsMobile();
+    const reduced = usePrefersReducedMotion();
+    const [threeLoaded, setThreeLoaded] = useState(false);
+
+    useEffect(() => {
+        if (!isMobile) {
+            loadThree().then(() => setThreeLoaded(true));
+        }
+    }, [isMobile]);
+
+    // Mobile: lightweight CSS orb
+    if (isMobile) {
+        return (
+            <div className="services-hero-3d">
+                <div className="services-hero-3d-glow" />
+                <div style={mobileOrbStyle} />
+            </div>
+        );
+    }
+
+    // Desktop: full Three.js (lazy loaded)
+    if (!threeLoaded || !Canvas) return <div className="services-hero-3d"><div className="services-hero-3d-glow" /></div>;
+
     return (
         <div className="services-hero-3d">
             <div className="services-hero-3d-glow" />
@@ -125,3 +172,4 @@ export default function ServicesHero3D() {
         </div>
     )
 }
+

@@ -2,8 +2,7 @@
    GRO INNOVATIVE — Premium Dark & Green Theme
    ============================================ */
 
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+/* Fonts loaded via index.html — no @import needed */
 
 /* ── Variables & Themes ── */
 :root {
@@ -113,7 +112,15 @@ main {
   filter: blur(50px);
   animation: meshFlow 25s ease-in-out infinite alternate;
   opacity: 1;
-  /* Maximum visibility */
+}
+
+@media (max-width: 768px) {
+  .bg-mesh-gradient {
+    filter: blur(20px);
+    /* Cheaper blur */
+    animation: none;
+    /* Disable transform animation on mobile to save CPU */
+  }
 }
 
 @keyframes meshFlow {
@@ -251,6 +258,14 @@ p {
   transform: translateY(-2px);
 }
 
+@media (max-width: 768px) {
+  .btn-secondary {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(25, 25, 25, 0.9);
+  }
+}
+
 .btn-white {
   background: #fff;
   color: var(--darker);
@@ -362,7 +377,6 @@ p {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
   border-color: var(--border-strong);
-  /* Switches from faint white to glowing green */
   background: var(--surface);
 }
 
@@ -378,6 +392,17 @@ p {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+
+  .card,
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--surface);
+    box-shadow: none;
+  }
 }
 
 
@@ -477,10 +502,15 @@ p {
 @media (max-width: 768px) {
   .section {
     padding: 64px 0;
+    content-visibility: auto;
+    /* Skip rendering offscreen sections */
+    contain-intrinsic-size: 500px;
   }
 
   .section-sm {
     padding: 48px 0;
+    content-visibility: auto;
+    contain-intrinsic-size: 300px;
   }
 }
 

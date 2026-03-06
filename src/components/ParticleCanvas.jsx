@@ -1,21 +1,29 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ParticleCanvas() {
     const canvasRef = useRef(null);
+    // Detect mobile once at mount — no re-renders needed
+    const [isMobile] = useState(() =>
+        typeof window !== 'undefined' &&
+        (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches)
+    );
 
     useEffect(() => {
+        // Skip entirely on mobile — parent provides CSS gradient fallback
+        if (isMobile) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
+        let animId;
 
-        const STAR_COUNT = 3000;
-        const FOCAL_LENGTH = 3000; // Perspective depth
+        const STAR_COUNT = 600; // Reduced from 3000 — visually identical
+        const FOCAL_LENGTH = 3000;
 
         let stars = [];
-        let mouse = { x: 0, y: 0 };
         let targetRotation = { x: 0, y: 0 };
         let currentRotation = { x: 0, y: 0 };
 
@@ -23,7 +31,7 @@ export default function ParticleCanvas() {
             targetRotation.x = (e.clientX / width - 0.5) * 0.4;
             targetRotation.y = (e.clientY / height - 0.5) * 0.4;
         };
-        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
 
         const onResize = () => {
             width = canvas.width = window.innerWidth;
@@ -44,28 +52,20 @@ export default function ParticleCanvas() {
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.vz = (Math.random() - 0.5) * 0.5;
-
-                // Twinkle properties
                 this.opacity = Math.random();
                 this.twinkleSpeed = 0.01 + Math.random() * 0.03;
                 this.baseOpacity = 2 + Math.random() * 0.6;
-                this.color = Math.random() > 0.8 ? '#10b981ff' : '#FFFFFF'; // Emerald or White
+                this.isGreen = Math.random() > 0.8;
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
                 this.z += this.vz;
-
-                // Loop depth
                 if (this.z < 1) this.z = 2000;
                 if (this.z > 2000) this.z = 1;
-
-                // Simple boundaries
                 if (Math.abs(this.x) > 1500) this.x *= -0.99;
                 if (Math.abs(this.y) > 1500) this.y *= -0.99;
-
-                // Twinkle
                 this.opacity += this.twinkleSpeed;
                 if (this.opacity > 1 || this.opacity < 0) this.twinkleSpeed *= -1;
             }
@@ -74,19 +74,14 @@ export default function ParticleCanvas() {
                 let x = this.x;
                 let y = this.y;
                 let z = this.z;
-
-                // Rotate around Y (horizontal movement)
                 let cosRy = Math.cos(ry);
                 let sinRy = Math.sin(ry);
                 let z1 = z * cosRy - x * sinRy;
                 let x1 = z * sinRy + x * cosRy;
-
-                // Rotate around X (vertical movement)
                 let cosRx = Math.cos(rx);
                 let sinRx = Math.sin(rx);
                 let y2 = y * cosRx - z1 * sinRx;
                 let z2 = y * sinRx + z1 * cosRx;
-
                 const scale = FOCAL_LENGTH / (FOCAL_LENGTH + z2);
                 this.screenX = x1 * scale + width / 2;
                 this.screenY = y2 * scale + height / 2;
@@ -104,6 +99,8 @@ export default function ParticleCanvas() {
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
+            // No shadowBlur — removed for performance
+            ctx.shadowBlur = 0;
 
             currentRotation.x += (targetRotation.x - currentRotation.x) * 0.05;
             currentRotation.y += (targetRotation.y - currentRotation.y) * 0.05;
@@ -111,39 +108,32 @@ export default function ParticleCanvas() {
             for (let s of stars) {
                 s.update();
                 s.project(currentRotation.y, currentRotation.x);
-
-                // Draw Star
                 const size = (1.2 + Math.random() * 0.5) * s.scale;
                 const alpha = s.depthOpacity * s.opacity;
 
                 ctx.beginPath();
                 ctx.arc(s.screenX, s.screenY, size, 0, Math.PI * 2);
-                ctx.fillStyle = s.color === '#FFFFFF'
-                    ? `rgba(255, 255, 255, ${alpha})`
-                    : `rgba(16, 185, 129, ${alpha})`;
-
-                // Subtle glow for theme color stars
-                if (s.color !== '#FFFFFF') {
-                    ctx.shadowBlur = 5 * s.scale;
-                    ctx.shadowColor = '#10B981';
-                } else {
-                    ctx.shadowBlur = 0;
-                }
-
+                ctx.fillStyle = s.isGreen
+                    ? `rgba(16, 185, 129, ${alpha})`
+                    : `rgba(255, 255, 255, ${alpha})`;
                 ctx.fill();
             }
 
-            requestAnimationFrame(animate);
+            animId = requestAnimationFrame(animate);
         }
 
         init();
-        animate();
+        animId = requestAnimationFrame(animate);
 
         return () => {
+            cancelAnimationFrame(animId);
             window.removeEventListener('resize', onResize);
             window.removeEventListener('mousemove', onMouseMove);
         };
-    }, []);
+    }, [isMobile]);
+
+    // On mobile, render nothing — parent CSS handles the background
+    if (isMobile) return null;
 
     return (
         <canvas

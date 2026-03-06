@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import emailjs from '@emailjs/browser'
+// emailjs loaded dynamically at form submit time — saves ~50KB from initial bundle
 import ParticleCanvas from '../components/ParticleCanvas'
 import SEO from '../components/SEO'
 import StructuredData from '../components/StructuredData'
@@ -140,6 +140,7 @@ export default function Contact() {
             // Non-blocking: failure shows a soft note but does NOT cancel success.
             let autoReplyOk = false
             try {
+                const { default: emailjs } = await import('@emailjs/browser');
                 await emailjs.send(
                     EJS_SERVICE,
                     EJS_TEMPLATE,

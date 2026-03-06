@@ -43,8 +43,17 @@
 }
 
 @keyframes shv-dot-pulse {
-    0%, 100% { opacity: 0.1;  transform: scale(1)   translateY(0);   }
-    50%       { opacity: 0.55; transform: scale(1.5) translateY(-6px); }
+
+    0%,
+    100% {
+        opacity: 0.1;
+        transform: scale(1) translateY(0);
+    }
+
+    50% {
+        opacity: 0.55;
+        transform: scale(1.5) translateY(-6px);
+    }
 }
 
 /* ── Expanding pulse ring ── */
@@ -62,9 +71,20 @@
 }
 
 @keyframes shv-pulse-expand {
-    0%   { transform: scale(0.55); opacity: 0.7; }
-    65%  { transform: scale(1.55); opacity: 0;   }
-    100% { transform: scale(1.55); opacity: 0;   }
+    0% {
+        transform: scale(0.55);
+        opacity: 0.7;
+    }
+
+    65% {
+        transform: scale(1.55);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.55);
+        opacity: 0;
+    }
 }
 
 /* ── Main glass panel ── */
@@ -101,10 +121,37 @@
     pointer-events: none;
 }
 
-.shv-corner--tl { top: 9px;    left: 9px;   border-top-width: 1.5px;    border-left-width: 1.5px;   border-radius: 3px 0 0 0; }
-.shv-corner--tr { top: 9px;    right: 9px;  border-top-width: 1.5px;    border-right-width: 1.5px;  border-radius: 0 3px 0 0; }
-.shv-corner--bl { bottom: 9px; left: 9px;   border-bottom-width: 1.5px; border-left-width: 1.5px;   border-radius: 0 0 0 3px; }
-.shv-corner--br { bottom: 9px; right: 9px;  border-bottom-width: 1.5px; border-right-width: 1.5px;  border-radius: 0 0 3px 0; }
+.shv-corner--tl {
+    top: 9px;
+    left: 9px;
+    border-top-width: 1.5px;
+    border-left-width: 1.5px;
+    border-radius: 3px 0 0 0;
+}
+
+.shv-corner--tr {
+    top: 9px;
+    right: 9px;
+    border-top-width: 1.5px;
+    border-right-width: 1.5px;
+    border-radius: 0 3px 0 0;
+}
+
+.shv-corner--bl {
+    bottom: 9px;
+    left: 9px;
+    border-bottom-width: 1.5px;
+    border-left-width: 1.5px;
+    border-radius: 0 0 0 3px;
+}
+
+.shv-corner--br {
+    bottom: 9px;
+    right: 9px;
+    border-bottom-width: 1.5px;
+    border-right-width: 1.5px;
+    border-radius: 0 0 3px 0;
+}
 
 /* ── Horizontal scan line ── */
 .shv-scan {
@@ -123,10 +170,23 @@
 }
 
 @keyframes shv-scan-anim {
-    0%   { top: 0%;   opacity: 0; }
-    4%   {             opacity: 1; }
-    96%  {             opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+    0% {
+        top: 0%;
+        opacity: 0;
+    }
+
+    4% {
+        opacity: 1;
+    }
+
+    96% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
 /* ── Status bar ── */
@@ -151,13 +211,31 @@
 }
 
 @keyframes shv-blink {
-    0%, 100% { opacity: 1;    box-shadow: 0 0 5px rgba(16, 185, 129, 0.8); }
-    50%       { opacity: 0.25; box-shadow: none; }
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.8);
+    }
+
+    50% {
+        opacity: 0.25;
+        box-shadow: none;
+    }
 }
 
-.shv-status-txt { color: #10B981; }
-.shv-sep        { color: rgba(16, 185, 129, 0.35); }
-.shv-version    { color: rgba(16, 185, 129, 0.45); font-size: 0.56rem; }
+.shv-status-txt {
+    color: #10B981;
+}
+
+.shv-sep {
+    color: rgba(16, 185, 129, 0.35);
+}
+
+.shv-version {
+    color: rgba(16, 185, 129, 0.45);
+    font-size: 0.56rem;
+}
 
 /* ── KPI metrics row ── */
 .shv-metrics {
@@ -303,6 +381,9 @@
     .shv-panel {
         width: 220px;
         padding: 14px 12px 12px;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background-color: rgba(3, 18, 10, 0.98);
     }
 
     .shv-chip {

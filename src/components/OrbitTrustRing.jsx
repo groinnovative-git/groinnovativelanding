@@ -65,9 +65,9 @@ const ITEMS = [
  */
 const BASE = [
     -Math.PI / 2,  // top
-     0,             // right
-     Math.PI / 2,  // bottom
-     Math.PI,      // left
+    0,             // right
+    Math.PI / 2,  // bottom
+    Math.PI,      // left
 ]
 
 /* Full clockwise rotation every 28 seconds */
@@ -80,10 +80,10 @@ function getRadius() {
 
 /* ── Component ── */
 export default function OrbitTrustRing() {
-    const reduced       = usePrefersReducedMotion()
-    const rotRef        = useRef(0)
-    const posRefs       = useRef([null, null, null, null])
-    const radiusRef     = useRef(getRadius())
+    const reduced = usePrefersReducedMotion()
+    const rotRef = useRef(0)
+    const posRefs = useRef([null, null, null, null])
+    const radiusRef = useRef(getRadius())
     const [hoveredIdx, setHoveredIdx] = useState(-1)
 
     /* Keep radius ref in sync with viewport */
@@ -104,24 +104,26 @@ export default function OrbitTrustRing() {
             const x = Math.cos(BASE[i]) * r
             const y = Math.sin(BASE[i]) * r
             el.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`
-            el.style.opacity   = '1'
+            el.style.opacity = '1'
         })
     }, [])
 
     /* Continuous orbit rotation — direct DOM mutation (no React re-renders) */
+    /* On mobile, skip entirely — badges stay in static cardinal positions */
+    const isMobile = typeof window !== 'undefined' && (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches);
     useAnimationFrame((_, delta) => {
-        if (reduced) return
-        rotRef.current += delta * SPEED
+        if (reduced || isMobile) return;
+        rotRef.current += delta * SPEED;
 
-        const rot        = rotRef.current
-        const r          = radiusRef.current
+        const rot = rotRef.current
+        const r = radiusRef.current
         const counterDeg = -(rot * 180) / Math.PI   // keep badge text upright
 
         posRefs.current.forEach((el, i) => {
             if (!el) return
             const angle = BASE[i] + rot
-            const x     = Math.cos(angle) * r
-            const y     = Math.sin(angle) * r
+            const x = Math.cos(angle) * r
+            const y = Math.sin(angle) * r
             el.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%)) rotate(${counterDeg}deg)`
         })
     })

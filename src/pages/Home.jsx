@@ -189,8 +189,8 @@ export default function Home() {
 
             {/* ── SERVICES ── */}
             <section className="section services-section">
-                <div className="services-particles-wrap">
-                    <ParticleCanvas />
+                <div className="services-particles-wrap" aria-hidden>
+                    {/* ParticleCanvas removed — hero already has one; 2 canvases doubled CPU cost */}
                 </div>
                 <div className="container relative-z">
                     <div className="section-header">

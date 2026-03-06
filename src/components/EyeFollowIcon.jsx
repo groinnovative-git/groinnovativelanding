@@ -80,11 +80,11 @@ export default function EyeFollowIcon() {
 
     // ── Eye tracking (desktop mouse follow) ──
     useEffect(() => {
-        // Feature detect touch devices
+        // Feature detect touch devices — skip tracking entirely on mobile
         const isTouch = window.matchMedia('(pointer: coarse)').matches;
+        if (isTouch) return; // No mouse to track — save CPU
 
         const handleMouseMove = (e) => {
-            if (isTouch) return;
             mouseIsActive.current = true;
             mousePos.current = { x: e.clientX, y: e.clientY };
         };
