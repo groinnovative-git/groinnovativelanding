@@ -1,7 +1,10 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
+import { PAGE_SEO } from '../seo/seoConfig'
+import { breadcrumbSchema, serviceSchemas } from '../seo/schemas'
 import { Zap, Lock, Search, Wrench } from 'lucide-react'
 import './Services.css'
 
@@ -71,10 +74,18 @@ const cardVariants = {
 }
 
 export default function Services() {
-    useEffect(() => { document.title = 'Services | Gro Innovative' }, [])
+
 
     return (
         <div className="page-enter">
+            <SEO {...PAGE_SEO.services} />
+            <StructuredData data={[
+                breadcrumbSchema([
+                    { name: 'Home', path: '/' },
+                    { name: 'Services', path: '/services' },
+                ]),
+                ...serviceSchemas,
+            ]} />
             {/* ── Services Hero ── */}
             <section className="relative w-full page-hero" style={{ padding: 0 }}>
                 <ParticleCanvas />

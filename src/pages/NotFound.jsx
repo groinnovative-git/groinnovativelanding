@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useReducedMotion } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
+import SEO from '../components/SEO'
+import { PAGE_SEO } from '../seo/seoConfig'
 import './NotFound.css'
 
 function useReveal() {
@@ -22,12 +24,10 @@ function useReveal() {
 
 export default function NotFound() {
     useReveal()
-    useEffect(() => {
-        document.title = '404 - Page Not Found | GroInnovative'
-    }, [])
 
     return (
         <div className="page-enter not-found-page">
+            <SEO {...PAGE_SEO.notFound} />
             {/* ── HERO ── */}
             <section className="hero-section min-h-screen">
                 <ParticleCanvas />

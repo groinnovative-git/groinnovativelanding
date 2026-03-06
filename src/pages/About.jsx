@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Search, PenTool, Code, Bug, Rocket, LifeBuoy } from 'lucide-react'
 import ParticleCanvas from '../components/ParticleCanvas'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
+import { PAGE_SEO } from '../seo/seoConfig'
+import { breadcrumbSchema } from '../seo/schemas'
 import './About.css'
 
 /* ── Scroll reveal (same as homepage) ── */
@@ -157,11 +161,15 @@ const approachSteps = [
 /* ══════════════════════════════════════════════════════════════════════════════ */
 export default function About() {
     useReveal()
-    useEffect(() => { document.title = 'About Us | Gro Innovative' }, [])
     const prefersReduced = useReducedMotion()
 
     return (
         <div className="page-enter">
+            <SEO {...PAGE_SEO.about} />
+            <StructuredData data={breadcrumbSchema([
+                { name: 'Home', path: '/' },
+                { name: 'About', path: '/about' },
+            ])} />
 
             {/* ─── 1. HERO ───────────────────────────────────────────────────── */}
             <section className="hero-section about-hero">
@@ -177,7 +185,7 @@ export default function About() {
                                 <span className="gradient-text">Modern Businesses</span>
                             </h1>
                             <p className="hero-sub reveal reveal-delay-2" style={{ maxWidth: 640 }}>
-                                Gro Innovative builds scalable websites, software, and AI-integrated solutions that help businesses launch faster, convert better, and grow sustainably — with strong design, clean engineering, and long-term support.
+                                Gro Innovative builds scalable websites, software, and AI-integrated solutions that help businesses launch faster, convert better, and grow sustainably with strong design, clean engineering, and long-term support.
                             </p>
                             <div className="hero-actions reveal reveal-delay-3">
                                 <Link to="/contact" className="btn btn-primary">
@@ -205,7 +213,7 @@ export default function About() {
                             <div className="badge reveal"><span className="badge-dot" />WHO WE ARE</div>
                             <h2 className="reveal reveal-delay-1">Who We Are</h2>
                             <p className="reveal reveal-delay-2" style={{ marginBottom: 32 }}>
-                                Gro Innovative is a modern digital solutions company helping startups, founders, and growing businesses build high-performing digital products. We combine strategy, UI/UX design, development, automation, and AI integration to create solutions that are visually premium, technically strong, scalable, and business-focused.
+                                Gro Innovative is a modern digital solutions company helping startups, founders, and growing businesses build high performing digital products. We combine strategy, UI/UX design, development, automation, and AI integration to create solutions that are visually premium, technically strong, scalable, and business-focused.
                             </p>
                             <motion.ul
                                 className="about-highlights"
@@ -215,7 +223,7 @@ export default function About() {
                                 viewport={{ once: true, amount: 0.2 }}
                             >
                                 {[
-                                    'Product-first UI/UX and conversion-focused design',
+                                    'Product first UI/UX and conversion focused design',
                                     'Clean architecture and scalable development',
                                     'AI-enabled workflows and practical automation',
                                 ].map(item => (
@@ -276,14 +284,14 @@ export default function About() {
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
                             </div>
                             <h3>Vision</h3>
-                            <p>To become a trusted digital growth partner for businesses worldwide — by delivering intelligent, scalable, and impactful digital experiences powered by innovation, technology, and creativity.</p>
+                            <p>To become a trusted digital growth partner for businesses worldwide by delivering intelligent, scalable, and impactful digital experiences powered by innovation, technology, and creativity.</p>
                         </motion.div>
                         <motion.div variants={prefersReduced ? fadeUp : slideFromRight} className="card vm-card">
                             <div className="vm-icon-wrap">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                             </div>
                             <h3>Mission</h3>
-                            <p>To help businesses grow faster with modern websites, software applications, AI-integrated solutions, SEO, branding, and ongoing support — delivered through an agile, transparent, and results-driven process.</p>
+                            <p>To help businesses grow faster with modern websites, software applications, AI-integrated solutions, SEO, branding, and ongoing support delivered through an agile, transparent, and results driven process.</p>
                         </motion.div>
                     </motion.div>
                 </div>
@@ -326,7 +334,7 @@ export default function About() {
                             viewport={{ once: true, amount: 0.3 }}
                             className="team-subtitle"
                         >
-                            A multi-disciplinary team delivering design, development, testing, and deployment with a clean agile workflow.
+                            A multi disciplinary team delivering design, development, testing, and deployment with a clean agile workflow.
                         </motion.p>
                     </div>
                     <motion.div
@@ -361,7 +369,7 @@ export default function About() {
                             <div className="badge"><span className="badge-dot" />WHY US</div>
                             <h2>Why Businesses Choose Gro Innovative</h2>
                             <p>
-                                We don't just build digital products — we create growth-focused solutions engineered for performance, usability, scalability, and long-term business value.
+                                We don't just build digital products we create growth focused solutions engineered for performance, usability, scalability, and long-term business value.
                             </p>
                         </motion.div>
                         <motion.div
@@ -437,7 +445,7 @@ export default function About() {
                     <div className="section-header">
                         <div className="badge reveal"><span className="badge-dot" />THE JOURNEY</div>
                         <h2 className="reveal reveal-delay-1">Our Approach</h2>
-                        <p className="reveal reveal-delay-2">A proven 4-step process that takes your idea from concept to a high-performing digital product.</p>
+                        <p className="reveal reveal-delay-2">A proven 4-step process that takes your idea from concept to a high performing digital product.</p>
                     </div>
                     <motion.div
                         className="approach-grid"
@@ -464,14 +472,14 @@ export default function About() {
                         <div className="about-cta-content">
                             <h2 className="reveal" style={{ color: '#fff' }}>Ready to Build Something Smarter?</h2>
                             <p className="reveal reveal-delay-1">
-                                Let's transform your idea into a high-performing digital product — with strategy, design, development, and AI-powered execution.
+                                Let's transform your idea into a high performing digital product with strategy, design, development, and AI-powered execution.
                             </p>
                             <div className="about-cta-btns reveal reveal-delay-2">
                                 <Link to="/contact" className="btn btn-primary btn-lg">
                                     Start Your Project <span className="arr">→</span>
                                 </Link>
-                                <Link to="/contact" className="btn btn-secondary btn-lg">
-                                    Talk to Us <span className="arr">→</span>
+                                <Link to="/services" className="btn btn-secondary btn-lg">
+                                    Explore Services <span className="arr">→</span>
                                 </Link>
                             </div>
                         </div>

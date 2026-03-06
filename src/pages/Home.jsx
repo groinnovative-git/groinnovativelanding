@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion, useMotionValue, useSpring } from 'framer-motion'
 import ParticleCanvas from '../components/ParticleCanvas'
 import EyeFollowIcon from '../components/EyeFollowIcon'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
+import { PAGE_SEO } from '../seo/seoConfig'
+import { breadcrumbSchema, faqSchema } from '../seo/schemas'
 import './Home.css'
 
 /* Scroll reveal hook */
@@ -107,8 +111,6 @@ const serviceCardAnim = {
 
 export default function Home() {
     useReveal()
-    useEffect(() => { document.title = 'GroInnovative | Software & IT Solutions' }, [])
-
     const prefersReducedMotion = useReducedMotion()
     const mouseX = useMotionValue(0)
     const mouseY = useMotionValue(0)
@@ -125,6 +127,11 @@ export default function Home() {
 
     return (
         <div className="page-enter">
+            <SEO {...PAGE_SEO.home} />
+            <StructuredData data={[
+                breadcrumbSchema([{ name: 'Home', path: '/' }]),
+                faqSchema,
+            ]} />
             {/* ── HERO ── */}
             <section className="hero-section">
                 <ParticleCanvas />
@@ -147,10 +154,10 @@ export default function Home() {
                                 We design and build scalable SaaS platforms, intelligent websites, and automation-ready digital products engineered for performance, visibility, and long-term growth.
                             </p>
                             <div className="hero-actions reveal reveal-delay-3">
-                                <Link to="/services" className="btn btn-primary">
+                                <Link to="/contact" className="btn btn-primary">
                                     ✔ Start a Project
                                 </Link>
-                                <Link to="/contact" className="btn btn-secondary">
+                                <Link to="/services" className="btn btn-secondary">
                                     ✔ Explore Services
                                 </Link>
                             </div>

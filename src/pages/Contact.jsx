@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import ParticleCanvas from '../components/ParticleCanvas'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
+import { PAGE_SEO } from '../seo/seoConfig'
+import { breadcrumbSchema } from '../seo/schemas'
 import './Contact.css'
 
 // ── Web3Forms (admin notification) ────────────────────────────────────────────
@@ -72,7 +76,6 @@ const BLANK = {
 // ══════════════════════════════════════════════════════════════════════════════
 export default function Contact() {
     useReveal()
-    useEffect(() => { document.title = 'Contact Us | Gro Innovative' }, [])
 
     const [form, setForm] = useState(BLANK)
     const [errors, setErrors] = useState({})
@@ -178,6 +181,11 @@ export default function Contact() {
     // ── Render ─────────────────────────────────────────────────────────────────
     return (
         <div className="page-enter">
+            <SEO {...PAGE_SEO.contact} />
+            <StructuredData data={breadcrumbSchema([
+                { name: 'Home', path: '/' },
+                { name: 'Contact', path: '/contact' },
+            ])} />
 
             {/* ── Hero ──────────────────────────────────────────────────────── */}
             <section className="page-hero" style={{ padding: 0 }}>
