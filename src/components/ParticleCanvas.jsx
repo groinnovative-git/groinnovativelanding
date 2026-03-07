@@ -2,15 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function ParticleCanvas() {
     const canvasRef = useRef(null);
-    // Detect mobile once at mount — no re-renders needed
-    const [isMobile] = useState(() =>
-        typeof window !== 'undefined' &&
-        (window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches)
-    );
-
     useEffect(() => {
-        // Skip entirely on mobile — parent provides CSS gradient fallback
-        if (isMobile) return;
 
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -130,22 +122,20 @@ export default function ParticleCanvas() {
             window.removeEventListener('resize', onResize);
             window.removeEventListener('mousemove', onMouseMove);
         };
-    }, [isMobile]);
-
-    // On mobile, render nothing — parent CSS handles the background
-    if (isMobile) return null;
+    }, []);
 
     return (
         <canvas
             ref={canvasRef}
+            className="particle-canvas"
             style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
                 height: '100%',
-                zIndex: 0,
                 pointerEvents: 'none',
+                zIndex: 0,
                 opacity: 0.9,
                 mixBlendMode: 'screen'
             }}
