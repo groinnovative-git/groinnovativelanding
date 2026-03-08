@@ -6,6 +6,7 @@ import StructuredData from '../components/StructuredData'
 import { PAGE_SEO } from '../seo/seoConfig'
 import { breadcrumbSchema, serviceSchemas } from '../seo/schemas'
 import { Zap, Lock, Search, Wrench } from 'lucide-react'
+import LiveProjects from '../components/sections/LiveProjects'
 import './Services.css'
 
 const services = [
@@ -231,6 +232,9 @@ export default function Services() {
                     </motion.div>
                 </div>
             </section>
+
+            {/* Our Live Projects */}
+            <LiveProjects />
 
             {/* Service Packages */}
             <section className="section bg-dim">

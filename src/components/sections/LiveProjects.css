@@ -1,0 +1,254 @@
+/* ============================================================
+   LIVE PROJECTS SECTION — GRO INNOVATIVE
+   Matches site: dark theme, green accent, premium glass cards
+   ============================================================ */
+
+/* ── Section Wrapper ── */
+.lp-section {
+    background: rgba(255, 255, 255, 0.015);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Project Card ── */
+.lp-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition:
+        transform 0.35s var(--ease),
+        box-shadow 0.35s var(--ease),
+        border-color 0.35s var(--ease);
+    height: 100%;
+    position: relative;
+}
+
+.lp-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(16, 185, 129, 0.38);
+    box-shadow:
+        0 28px 56px -20px rgba(0, 0, 0, 0.72),
+        0 0 0 1px rgba(16, 185, 129, 0.1),
+        0 0 48px -12px rgba(16, 185, 129, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-card:hover {
+        transform: none;
+    }
+}
+
+/* ── Browser Chrome Preview ── */
+.lp-preview {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+/* Browser top bar with traffic-light dots */
+.lp-browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    background: #0c0c0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lp-dots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.lp-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.lp-dot-r { background: #FF5F57; }
+.lp-dot-y { background: #FFBD2E; }
+.lp-dot-g { background: #28C840; }
+
+.lp-url-pill {
+    flex: 1;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.22);
+    font-family: 'Inter', ui-monospace, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+}
+
+/* ── Screenshot Screen Area ── */
+.lp-screen {
+    position: relative;
+    overflow: hidden;
+    height: 210px;
+    display: block;
+}
+
+/* Actual screenshot image */
+.lp-screen-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.5s var(--ease);
+}
+
+.lp-card:hover .lp-screen-img {
+    transform: scale(1.04);
+}
+
+/* ── Hover Overlay ── */
+.lp-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    pointer-events: none;
+}
+
+.lp-overlay svg {
+    color: var(--primary);
+}
+
+.lp-card:hover .lp-overlay {
+    opacity: 1;
+}
+
+/* ── Card Body ── */
+.lp-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+/* Category chip + feature badges row */
+.lp-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+}
+
+/* Category chip (project brand color) */
+.lp-category {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 11px;
+    border-radius: 100px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+/* Feature badge chips */
+.lp-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+/* Card title */
+.lp-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* Card description */
+.lp-desc {
+    font-size: 0.88rem;
+    line-height: 1.68;
+    color: var(--muted);
+    flex: 1;
+    margin: 0;
+}
+
+/* View Demo CTA button */
+.lp-demo-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 10px 22px;
+    font-size: 0.88rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .lp-overlay {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .lp-screen {
+        height: 185px;
+    }
+
+    .lp-body {
+        padding: 18px 20px 20px;
+        gap: 10px;
+    }
+
+    .lp-demo-btn {
+        padding: 9px 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .lp-screen {
+        height: 165px;
+    }
+
+    .lp-body {
+        padding: 16px 16px 18px;
+    }
+}
